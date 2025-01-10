@@ -21,7 +21,7 @@ def chatAPI(request):
     try:
         # Use the new client API to make a chat completion request
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",  # You can use "gpt-4" or another model as needed
+            model="gpt-3.5-turbo", 
             messages=[
                 {
                     "role": "user",
