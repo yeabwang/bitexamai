@@ -24,7 +24,7 @@ def chatAPI(request):
     try:
         # Use the OpenAI API to make a chat completion request
         response = client.chat.completions.create(
-            model="gpt-4",  # Corrected model name to gpt-4
+            model="gpt-4", 
             messages=[
                 {"role": "developer", "content": "You are a helpful assistant."},
                 {
@@ -34,10 +34,8 @@ def chatAPI(request):
             ]
         )
 
-        # Correct way to extract the generated response from the API response
         openai_response = response.choices[0].message.content.strip()
 
-        # Return the response as JSON
         data = {"response": openai_response}
         return JsonResponse(data)
 
