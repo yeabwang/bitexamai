@@ -8,30 +8,34 @@ from django.http import JsonResponse
 # Load environment variables from .env
 load_dotenv()
 
+# Retrieve the OpenAI API key from environment variables
+api_key = api_key = os.getenv("OPENAI_API_KEY")
+
+# Initialize the OpenAI client with the API key
+client = OpenAI(api_key=api_key)
+
 # Set up logger
 logger = logging.getLogger(__name__)
-
-# Initialize OpenAI client with the API key
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def chat(request):
     return render(request, 'index.html')
 
 def chatAPI(request):
     try:
-        # Use the new client API to make a chat completion request
+        # Use the OpenAI API to make a chat completion request
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo", 
+            model="gpt-4",  # Corrected model name to gpt-4
             messages=[
+                {"role": "developer", "content": "You are a helpful assistant."},
                 {
                     "role": "user",
-                    "content": "You are a helpful assistant."
+                    "content": "Write a haiku about recursion in programming."
                 }
             ]
         )
 
-        # Extract the generated response from the API response
-        openai_response = response['choices'][0]['message']['content'].strip()
+        # Correct way to extract the generated response from the API response
+        openai_response = response.choices[0].message.content.strip()
 
         # Return the response as JSON
         data = {"response": openai_response}
